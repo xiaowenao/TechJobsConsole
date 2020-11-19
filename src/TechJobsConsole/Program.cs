@@ -1,11 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Generic; //list,collections
+using System.Linq;
 
 namespace TechJobsConsole
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main(string[] args)  
+            //this method does not return any value, just contain some code, static: only one instance of method "Main" in memory
         {
             // Create two Dictionary vars to hold info for menu and data
 
@@ -118,7 +120,25 @@ namespace TechJobsConsole
 
         private static void PrintJobs(List<Dictionary<string, string>> someJobs)
         {
-            Console.WriteLine("PrintJobs is not implemented yet");
+            //Console.WriteLine("PrintJobs is not implemented yet");
+
+            if(someJobs.Count == 0)
+            {
+                Console.WriteLine("No Results Found.");
+            }
+            else
+            {
+                foreach(Dictionary<string, string> item in someJobs)
+                {
+                    Console.WriteLine("*****");
+                    foreach(KeyValuePair<string, string> pair in item)
+                    {
+                        Console.WriteLine(pair.Key + ": " + pair.Value);
+                    }
+                    Console.WriteLine("*****\n");
+                }
+            }
+
         }
     }
 }

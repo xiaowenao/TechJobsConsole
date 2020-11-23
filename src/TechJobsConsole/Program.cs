@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic; //list,collections
-using System.Linq;
+
 
 namespace TechJobsConsole
 {
@@ -11,12 +11,12 @@ namespace TechJobsConsole
         {
             // Create two Dictionary vars to hold info for menu and data
 
-            // Top-level menu options
+            // Top-level menu options, "View Jobs by Search or List"
             Dictionary<string, string> actionChoices = new Dictionary<string, string>();
             actionChoices.Add("search", "Search");
             actionChoices.Add("list", "List");
 
-            // Column options
+            // Column options, view jobs by list options
             Dictionary<string, string> columnChoices = new Dictionary<string, string>();
             columnChoices.Add("core competency", "Skill");
             columnChoices.Add("employer", "Employer");
@@ -30,19 +30,19 @@ namespace TechJobsConsole
             while (true)
             {
 
-                string actionChoice = GetUserSelection("View Jobs", actionChoices);
+                string actionChoice = GetUserSelection("View Jobs", actionChoices); //first choice, view jobs by search or list
 
                 if (actionChoice.Equals("list"))
                 {
-                    string columnChoice = GetUserSelection("List", columnChoices);
+                    string columnChoice = GetUserSelection("List", columnChoices); //view jobs by list options
 
-                    if (columnChoice.Equals("all"))
+                    if (columnChoice.Equals("all")) //if choose "all" in "List by", print all
                     {
                         PrintJobs(JobData.FindAll());
                     }
                     else
                     {
-                        List<string> results = JobData.FindAll(columnChoice);
+                        List<string> results = JobData.FindAll(columnChoice); //print by List choices/column choices, namely: skill, employer, Location, position type
 
                         Console.WriteLine("\n*** All " + columnChoices[columnChoice] + " Values ***");
                         foreach (string item in results)
@@ -65,13 +65,15 @@ namespace TechJobsConsole
                     // Fetch results
                     if (columnChoice.Equals("all"))
                     {
-                        Console.WriteLine("Search all fields not yet implemented.");
+                        //Console.WriteLine("Search all fields not yet implemented.");
+                        searchResults = JobData.FindByValue(searchTerm);
+                        PrintJobs(searchResults);
                     }
                     else
                     {
-                        searchResults = JobData.FindByColumnAndValue(columnChoice, searchTerm);
-                        PrintJobs(searchResults);
-                    }
+                       searchResults = JobData.FindByColumnAndValue(columnChoice, searchTerm);
+                       PrintJobs(searchResults);
+                   }
                 }
             }
         }
@@ -94,11 +96,11 @@ namespace TechJobsConsole
 
             do
             {
-                Console.WriteLine("\n" + choiceHeader + " by:");
+                Console.WriteLine("\n" + choiceHeader + " by:");//choiceHeader have 2 values: list or search,depend on user choose 0(search) or list(1) for the 1st question
 
                 for (int j = 0; j < choiceKeys.Length; j++)
                 {
-                    Console.WriteLine(j + " - " + choices[choiceKeys[j]]);
+                    Console.WriteLine(j + " - " + choices[choiceKeys[j]]); //choiceKeys are the column names??
                 }
 
                 string input = Console.ReadLine();
@@ -118,7 +120,7 @@ namespace TechJobsConsole
             return choiceKeys[choiceIdx];
         }
 
-        private static void PrintJobs(List<Dictionary<string, string>> someJobs)
+            private static void PrintJobs(List<Dictionary<string, string>> someJobs)
         {
             //Console.WriteLine("PrintJobs is not implemented yet");
 
